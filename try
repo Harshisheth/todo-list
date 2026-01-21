@@ -1,0 +1,21 @@
+import psycopg2
+from psycopg2 import OperationalError
+
+try:
+    conn = psycopg2.connect(
+        host="aws-1-ap-south-1.pooler.supabase.com",
+        port=6543,  # Supabase pooler port
+        database="postgres",
+        user="postgres.jlkpfficnyajdlgsjkai",
+        password="H",
+        sslmode="require"
+    )
+    print("✅ Connected to Supabase successfully")
+    cur = conn.cursor()
+    cur.execute("SELECT now();")
+    print("🕒 Server time:", cur.fetchone())
+    cur.close()
+    conn.close()
+except OperationalError as e:
+    print("❌ Connection failed")
+    print(e)
